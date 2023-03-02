@@ -1,8 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-
-namespace Part_5._5___More_Classes
+﻿namespace Part_5._5___More_Classes
 {
     internal class Program
     {
