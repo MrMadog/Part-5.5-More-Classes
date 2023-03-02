@@ -6,165 +6,189 @@
         {
             int bet, roll1, roll2, sum;
             double betAmount, accountBalance;
-            bool done;
+            bool done, done1;
             string answer;
             done = false;
+            done1 = false;
             accountBalance = 100.00;
 
             Die die1 = new Die();
 
             Console.WriteLine("Dice Game --");
             Console.WriteLine();
+            Thread.Sleep(500);
             while (done != true)
             {
                 Console.WriteLine("In this game, you will bet on the outcome of 2 dice being rolled.");
                 Console.WriteLine();
+                Thread.Sleep(2000);
                 Console.WriteLine($"Your account balance is: ${accountBalance}");
                 Console.WriteLine();
-                Console.WriteLine("Your bet options are: ");
-                Console.WriteLine("1 - Doubles, 2 - not Doubles, 3 - Even Sum, 4 - Odd Sum");
-                Console.WriteLine();
-                Console.Write("YOUR BET:  ");
+                Thread.Sleep(1000);
 
-                if (Int32.TryParse(Console.ReadLine(), out bet) && bet <= 4 && bet >= 1)
+            // BET ----------------------------------------------------------------------------------------------------------------------------------
+                do
+                {
+                    Console.WriteLine("Your bet options are: ");
+                    Console.WriteLine("1 - Doubles, 2 - not Doubles, 3 - Even Sum, 4 - Odd Sum");
+                    Console.WriteLine();
+                    Thread.Sleep(500);
+                    Console.Write("YOUR BET:  ");
+                    if (Int32.TryParse(Console.ReadLine(), out bet))
+                    {
+                        if ((bet != 1 && bet != 2 && bet != 3 && bet != 4))
+                        {
+                            Console.WriteLine();
+                            Thread.Sleep(500);
+                            Console.WriteLine("Invalid Input");
+                            Console.WriteLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Thread.Sleep(500);
+                        Console.WriteLine("Invalid Input");
+                        Console.WriteLine();
+                    }
+                } while (bet != 1 && bet != 2 && bet != 3 && bet != 4);
+
+            // BET AMOUNT ---------------------------------------------------------------------------------------------------------------------------
+                do
                 {
                     Console.WriteLine();
                     Console.Write("YOUR BET AMOUNT:  $");
                     if (Double.TryParse(Console.ReadLine(), out betAmount))
                     {
-                        betAmount = Math.Round(betAmount, 2);
-                        if (betAmount < 0)
-                        {
-                            betAmount = 0.00;
-                        }
-                        else if (betAmount > accountBalance)
-                        {
-                            betAmount = accountBalance;
-                        }
-
-                        Console.WriteLine();
-                        Console.Write("Press ENTER to roll ");
-                        Console.ReadLine();
-                        Console.WriteLine();
-                        Console.WriteLine("Rolling...");
-                        Thread.Sleep(1500);
-                        Console.WriteLine();
-
-                        Console.WriteLine("Die 1: ");
-                        die1.RollDie();
-                        die1.DrawRoll();
-                        roll1 = die1.Roll;
-                        Thread.Sleep(1000);
-
-                        Console.WriteLine("Die 2: ");
-                        die1.RollDie();
-                        die1.DrawRoll();
-                        roll2 = die1.Roll;
-                        Console.WriteLine();
-
-                        sum = roll1 + roll2;
-
-                        // DOUBLES ------------------------------------------------------------------------------------------------------------------------------
-                        if (bet == 1)
-                        {
-                            Console.WriteLine("Your bet was Doubles: ");
-
-                            if (roll1 == roll2)
-                            {
-                                Console.WriteLine("YOU WIN!");
-                                accountBalance = accountBalance + betAmount * 2;
-                                Console.WriteLine($"You bet ${betAmount} on Doubles, and won ${betAmount * 2}.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("YOU LOSE!");
-                                accountBalance = accountBalance - betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Doubles, and lost ${betAmount}.");
-                            }
-                            Math.Round(accountBalance, 2);
-                            Console.WriteLine($"Your account now stands at ${accountBalance}.");
-                        }
-
-                        // NOT DOUBLES --------------------------------------------------------------------------------------------------------------------------
-                        else if (bet == 2)
-                        {
-                            Console.WriteLine("Your bet was Not Doubles: ");
-
-                            if (roll1 != roll2)
-                            {
-                                Console.WriteLine("YOU WIN!");
-                                accountBalance = accountBalance + betAmount * 0.5;
-                                Console.WriteLine($"You bet ${betAmount} on Not Doubles, and won ${betAmount / 2}.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("YOU LOSE!");
-                                accountBalance = accountBalance - betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Not Doubles, and lost ${betAmount}.");
-                            }
-                            Math.Round(accountBalance, 2);
-                            Console.WriteLine($"Your account now stands at ${accountBalance}.");
-                        }
-
-                        // EVEN SUM -----------------------------------------------------------------------------------------------------------------------------
-                        else if (bet == 3)
-                        {
-                            Console.WriteLine("Your bet was Even Sum: ");
-
-                            if (sum % 2 == 0)
-                            {
-                                Console.WriteLine("YOU WIN!");
-                                accountBalance = accountBalance + betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Even Sum, and won ${betAmount}.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("YOU LOSE!");
-                                accountBalance = accountBalance - betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Even Sum, and lost ${betAmount}.");
-                            }
-                            Math.Round(accountBalance, 2);
-                            Console.WriteLine($"Your account now stands at ${accountBalance}.");
-                        }
-
-                        // ODD SUM ------------------------------------------------------------------------------------------------------------------------------
-                        else if (bet == 4)
-                        {
-                            Console.WriteLine("Your bet was Odd Sum: ");
-
-                            if (sum % 2 == 0)
-                            {
-                                Console.WriteLine("YOU LOSE!");
-                                accountBalance = accountBalance - betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Odd Sum, and lost ${betAmount}.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("YOU WIN!");
-                                accountBalance = accountBalance + betAmount;
-                                Console.WriteLine($"You bet ${betAmount} on Odd Sum, and won ${betAmount}.");
-                            }
-                            Math.Round(accountBalance, 2);
-                            Console.WriteLine($"Your account now stands at ${accountBalance}.");
-                        }
+                        done1 = true;
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Input");
                         Console.WriteLine();
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
+                        Console.WriteLine("Invalid Input");
                     }
-                }
-                else
+                } while (done1 != true);
+
+                betAmount = Math.Round(betAmount, 2);
+                if (betAmount < 0)
                 {
-                    Console.WriteLine("Invalid Input");
-                    Console.WriteLine();
-                    Thread.Sleep(1000);
+                    betAmount = 0.00;
+                }
+                else if (betAmount > accountBalance)
+                {
+                    betAmount = accountBalance;
+                }
+
+            // ROLLING ------------------------------------------------------------------------------------------------------------------------------
+                Console.WriteLine();
+                Console.Write("Press ENTER to roll ");
+                Console.ReadLine();
+                Console.WriteLine();
+                Console.WriteLine("Rolling...");
+                Thread.Sleep(1500);
+                Console.WriteLine();
+
+                Console.WriteLine("Die 1: ");
+                die1.RollDie();
+                die1.DrawRoll();
+                roll1 = die1.Roll;
+                Thread.Sleep(1000);
+
+                Console.WriteLine("Die 2: ");
+                die1.RollDie();
+                die1.DrawRoll();
+                roll2 = die1.Roll;
+                Console.WriteLine();
+
+                sum = roll1 + roll2;
+
+            // DOUBLES ------------------------------------------------------------------------------------------------------------------------------
+                if (bet == 1)
+                {
+                    Console.WriteLine("Your bet was Doubles: ");
+
+                    if (roll1 == roll2)
+                    {
+                        Console.WriteLine("YOU WIN!");
+                        accountBalance = accountBalance + betAmount * 2;
+                        Console.WriteLine($"You bet ${betAmount} on Doubles, and won ${betAmount * 2}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU LOSE!");
+                        accountBalance = accountBalance - betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Doubles, and lost ${betAmount}.");
+                    }
+                    Math.Round(accountBalance, 2);
+                    Console.WriteLine($"Your account now stands at ${accountBalance}.");
+                }
+
+            // NOT DOUBLES --------------------------------------------------------------------------------------------------------------------------
+                else if (bet == 2)
+                {
+                    Console.WriteLine("Your bet was Not Doubles: ");
+
+                    if (roll1 != roll2)
+                    {
+                        Console.WriteLine("YOU WIN!");
+                        accountBalance = accountBalance + betAmount * 0.5;
+                        Console.WriteLine($"You bet ${betAmount} on Not Doubles, and won ${betAmount / 2}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU LOSE!");
+                        accountBalance = accountBalance - betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Not Doubles, and lost ${betAmount}.");
+                    }
+                    Math.Round(accountBalance, 2);
+                    Console.WriteLine($"Your account now stands at ${accountBalance}.");
+                }
+
+            // EVEN SUM -----------------------------------------------------------------------------------------------------------------------------
+                else if (bet == 3)
+                {
+                    Console.WriteLine("Your bet was Even Sum: ");
+
+                    if (sum % 2 == 0)
+                    {
+                        Console.WriteLine("YOU WIN!");
+                        accountBalance = accountBalance + betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Even Sum, and won ${betAmount}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU LOSE!");
+                        accountBalance = accountBalance - betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Even Sum, and lost ${betAmount}.");
+                    }
+                    Math.Round(accountBalance, 2);
+                    Console.WriteLine($"Your account now stands at ${accountBalance}.");
+                }
+
+            // ODD SUM ------------------------------------------------------------------------------------------------------------------------------
+                else if (bet == 4)
+                {
+                    Console.WriteLine("Your bet was Odd Sum: ");
+
+                    if (sum % 2 == 0)
+                    {
+                        Console.WriteLine("YOU LOSE!");
+                        accountBalance = accountBalance - betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Odd Sum, and lost ${betAmount}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU WIN!");
+                        accountBalance = accountBalance + betAmount;
+                        Console.WriteLine($"You bet ${betAmount} on Odd Sum, and won ${betAmount}.");
+                    }
+                    Math.Round(accountBalance, 2);
+                    Console.WriteLine($"Your account now stands at ${accountBalance}.");
                 }
 
 
-
-                // QUIT -----------------------------------------------------------------------------------------------------------------------------------------
+        // QUIT -------------------------------------------------------------------------------------------------------------------------------------
                 Console.WriteLine();
                 Console.Write("Would you like to quit?(Y/N) ");
                 answer = Console.ReadLine().ToUpper();
